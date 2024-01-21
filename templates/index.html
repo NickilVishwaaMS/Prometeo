@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alzheimer's Disease Progression Prediction</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-main-pattern">
+    <div class="container">
+        <div class="content">
+            <h1 class="title">Upload an MRI Image for Prediction</h1>
+            <form id="upload-form" class="upload-form">
+                <input type="file" id="file-input" name="image" accept="image/*" required hidden>
+                <label for="file-input" class="file-label">Browse...</label>
+                <button type="submit" class="submit-btn">Predict</button>
+            </form>            
+            <div id="prediction-result" class="result">
+                <div id="image-container" style="display: none; align-items: center; justify-content: center;">
+                    <img id="image-preview" src="" alt="Image Preview" style="max-width: 100px; max-height: 100px;" />
+                </div>
+            </div>
+                    
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
