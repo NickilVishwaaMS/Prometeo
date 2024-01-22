@@ -1,62 +1,48 @@
 ## Alzheimer's Disease Progression prediction
 
-1. **Environment Setup**:
-- Install Python and PyTorch with GPU support (CUDA).
-- Install additional libraries: `torchvision` for model architectures and common datasets, `numpy` for numerical operations, `matplotlib` and `pandas` for data visualization, `scikit-learn` for additional machine learning tools.
+### 1. Data Acquisition and Preprocessing
+   - **Download Dataset**: Obtain the OASIS MRI dataset.
+   - Before preprocessing, perform exploratory data analysis to understand the dataset's characteristics, such as image quality, variability among classes, and any anomalies.
+   - **Standardize Images**: Resize and normalize images to a consistent format suitable for both custom and pretrained models.
 
-2. **Data Preprocessing**:
-- **Data Loading**: Utilize PyTorch's `torchvision.datasets.ImageFolder` or a custom `Dataset` class to load the .jpg MRI files.
-- **Data Splitting**: Split the data into training, validation, and test sets, ensuring stratified sampling for class balance.
-- **Data Transformation**:
-- Resize images to the required input size for each model.
-- Apply normalization using means and standard deviations compatible with the pre-trained networks.
-- Implement data augmentation (e.g., rotations, flips) to improve model generalization.
+### 2. Data Augmentation and Dataset Preparation
+   - **Augmentation**: Use insights from EDA to guide the data augmentation strategies. For instance, if certain patterns are underrepresented in the dataset, specific augmentation techniques can be employed to address this. Enhance the dataset using transformations like rotations, translations, and flips to introduce variability.
+   - **PyTorch Dataset and DataLoader**: Create a custom `Dataset` class and use `DataLoader` for efficient batch processing.
 
-3. **Exploratory Data Analysis (EDA)**:
-- Visualize sample images from each class.
-- Analyze class distribution, identifying any imbalance.
-- Explore image characteristics like contrast, brightness, and specific features relevant to Alzheimer's.
+### 3. Custom CNN Architecture
+   - **Designing Custom CNN**: Build a CNN from scratch tailored for MRI image analysis. Start with a basic architecture: convolutional layers, activation functions (ReLU), pooling layers, and fully connected layers.
+    - **Architecture Informed by EDA**: Design the custom CNN considering insights from EDA, such as the prevalence of certain features in the images.
+   - **Intuition Building**: Understand that each convolutional layer helps in extracting features from the images, with deeper layers capturing more complex patterns.
 
-4. **Model Setup and Adaptation**:
-- **ResNet, VGGNet, DenseNet, MobileNet**:
-- Load each model with pre-trained weights.
-- Modify the final layer(s) to output four classes (demented, very mild demented, etc.).
-- **U-Net**:
-- Consider using U-Net for image segmentation tasks.
-- Adapt U-Net for outputting segmented regions of interest in the brain images.
+### 4. Implementing Pretrained Models
+   - **Utilize Pretrained Networks**: Import models like ResNet, VGGNet, EfficientNet, and MobileNet with pretrained weights.
+   - **Model Selection Based on EDA**: Choose pretrained models that are likely to perform well based on the EDA findings. For example, if the dataset contains high-resolution images, models like EfficientNet, which are designed to handle varying scales, might be more appropriate.
+   - **Modify for Task**: Adapt these models by altering the final layers to perform classification specific to Alzheimer’s stages.
 
-5. **Loss Function and Optimizer**:
-- Utilize Cross-Entropy Loss for classification tasks.
-- Choose an optimizer like Adam or SGD with a consistent learning rate and other hyperparameters for all models.
+### 5. Training and Fine-Tuning
+   - **Custom CNN Training**: Train the custom CNN from scratch, monitoring its ability to learn features.
+   - **Adjust Training Process**: Modify the training process based on EDA findings, such as varying the learning rate if the dataset shows high variance.
+   - **Fine-Tuning Pretrained Models**: Unfreeze and train the top layers of pretrained models along with the new classification layers.
 
-6. **Training and Validation**:
-- Train each model on the training set while monitoring performance on the validation set.
-- Implement callbacks for early stopping based on validation loss and for saving the best model checkpoints.
+### 6. Model Evaluation and Comparison
+   - **Performance Metrics**: Evaluate all models using accuracy, precision, recall, and F1-score.
+   - **Incorporate EDA in Model Evaluation**: Use the insights from EDA to understand and interpret the model evaluation results better.
+   - **Model Comparison**: Compare the custom CNN with pretrained models to assess performance differences.
 
-7. **Performance Evaluation**:
-- Evaluate each model on the test dataset.
-- Use metrics such as accuracy, precision, recall, F1-score, and area under the ROC curve for comparison.
+### 7. Understanding Model Behavior
+   - **Visualization**: Use techniques like feature map visualization for the custom CNN and Grad-CAM for pretrained models to understand what the models are learning.
+   - **Leverage EDA for Interpretation:** Utilize the findings from EDA to aid in interpreting the behavior of both the custom and pretrained models.
+   - **Interpreting Results**: Analyze incorrect predictions to gain insights into model behavior and limitations.
 
-8. **Hyperparameter Tuning and Fine-Tuning**:
-- Experiment with different learning rates, batch sizes, and other hyperparameters.
-- Fine-tune the models by unfreezing some of the top layers and retraining with a lower learning rate.
+### 8. Application Development for Model Deployment
+   - **User Interface**: Develop a web application for easy interaction with the models.
+   - **Model Integration**: Embed the best performing model, whether it's the custom CNN or one of the pretrained models.
 
-9. **Model Interpretation and Analysis**:
-- Apply techniques like Grad-CAM to visualize model attention on MRI images.
-- Analyze false positives and false negatives to understand model weaknesses.
+### 9. Reporting and Documentation
+   - **Document Findings**: Report on model architectures, training processes, and comparative analysis.
+   - **Report Including EDA**: Document the findings from the exploratory data analysis along with the model development process and results.
+   - **Maintain Code Documentation**: Ensure clear documentation for replicability and maintenance.
 
-10. **Deployment** (optional):
-- Prepare the best-performing model for deployment.
-- Convert the model to a format suitable for the chosen deployment platform.
-
-11. **Documentation and Reporting**:
-- Thoroughly document the methodology, code, and results.
-- Prepare a comprehensive report or presentation detailing the findings and model comparisons.
-
-### Additional Substeps:
-- **Statistical Analysis**: Conduct statistical tests to assess the significance of performance differences between models.
-- **Collaboration with Medical Experts**: Regularly consult with medical professionals to validate findings and gain clinical insights.
-- **Continuous Monitoring and Updating**: Plan for ongoing monitoring of model performance and periodic updates based on new data or research findings.
-
-This detailed plan provides a structured approach to comparing different pre-trained models on MRI images for predicting Alzheimer's disease progression, ensuring thorough exploration and evaluation at each step.
- 
+### 10. Deployment and Monitoring
+   - **Deploy Application**: Make the application accessible on a server or cloud platform.
+   - **Monitor Performance**: Track the application’s performance and user feedback for continuous improvement.
